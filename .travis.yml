@@ -1,0 +1,27 @@
+# Lifemapper R Client Library
+language: r
+sudo: true
+cache: packages
+warnings_are_errors: true
+
+# Environment variables
+env:
+  global:
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual --timings"  ## do not build vignettes or manual
+    - _R_CHECK_TIMINGS_="0"  ## get the timing information for the examples for all of your functions
+
+r:
+  - release
+
+# for codecov
+r_packages:
+  - covr
+
+# do not build vignettes...takes too long and times out on travis
+r_build_args: --no-build-vignettes --no-manual
+r_check_args: --no-build-vignettes --no-manual --timings
+
+# only report coverage after build is successful
+after_success:
+  - Rscript -e 'covr::codecov()'
